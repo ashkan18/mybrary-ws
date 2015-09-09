@@ -14,7 +14,8 @@ module V1
 				end
 			end
 			post '/' do 
-				BookInstance.create(location: [params[:location][:lat].to_f, params[:location][:lon].to_f], 
+				BookInstance.create(lat: params[:location][:lat].to_f, 
+														lon: params[:location][:lon].to_f, 
 													  book: Book.find_or_create_by(isbn: params[:isbn]),
 														user: @current_user)
 			end

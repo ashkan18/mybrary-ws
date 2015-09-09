@@ -22,9 +22,9 @@ module V1
 				query = query.where("author.name" => params[:author_name]) if params.has_key?(:author_name)
 				if params.has_key?(:lat) and params.has_key?(:lon)
 					center = [params[:lat].to_f, params[:lon].to_f]
-					query = query.book_instances.within(5, origin: center)
+					query = query.within(5, origin: center)
 				end
-				present query.joins(:book_instances), with: Serializers::BooksRepresenter
+				present query, with: Serializers::BooksRepresenter
 			end
 
 			desc 'Get Specific book by isbn'
