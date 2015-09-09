@@ -13,8 +13,11 @@ module V1
 			post '' do
 				user = User.find_by(email: params[:email])
 				unless user
-					user = User.new(name: params[:name], email: params[:email],
-                 					password: params[:password], password_confirmation: params[:password]).save
+					user = User.new(name: params[:name], 
+													email: params[:email],
+                 					password: params[:password], 
+                 					password_confirmation: params[:password])
+					user.save
         end
 				user 
 			end

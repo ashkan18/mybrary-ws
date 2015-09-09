@@ -5,27 +5,6 @@ module V1
 			authenticate!
 		end
 		resources :book_instances do
-			desc 'Search book instances'
-			params do 
-				optional :name, type: String
-				optional :isbn, type: String
-				optional :lat, type: BigDecimal
-				optional :lon, type: BigDecimal
-				optional :author_name, type: String
-				all_or_none_of :lon, :lat
-			end
-			get '' do
-				query = BookInstance.all.joins(:book).includes(:book)
-				query = query.where("book.isbn" => params[:isbn]) if params.has_key?(:isbn)
-				query = query.where("book.name" => params[:name]) if params.has_key?(:name)
-				query = query.where("author.name" => params[:author_name]) if params.has_key?(:author_name)
-				if params.has_key?(:lat) and params.has_key?(:lon)
-					center = [params[:lat].to_f, params[:lon].to_f]
-					query = query.within(5, origin: center)
-				end
-				query.joins(:book).includes(:book)
-			end
-
 			desc 'Create new book instance'
 			params do 
 				requires :isbn, type: String, documentation: { example: 'ISBN of the book' }

@@ -24,7 +24,7 @@ module V1
 					center = [params[:lat].to_f, params[:lon].to_f]
 					query = query.book_instances.within(5, origin: center)
 				end
-				present query.includes(:book_instances)
+				present query.joins(:book_instances), with: Serializers::BooksRepresenter
 			end
 
 			desc 'Get Specific book by isbn'

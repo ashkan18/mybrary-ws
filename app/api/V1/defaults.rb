@@ -5,6 +5,7 @@ module V1
 	    prefix "api"
 	    version "v1", using: :header, vendor: 'Ashkan'
 	    format :json
+	    formatter :json, Grape::Formatter::Roar
 	    content_type :json, 'application/json'
 	    rescue_from ActiveRecord::RecordNotFound do |e|
         error!(e.message, 404)
