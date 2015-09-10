@@ -38,7 +38,7 @@ module V1
 				requires :name, type: String
 			end
 			post '' do
-				Book.find_or_create_by(isbn: params[:isbn], name: params[:name])
+				present Book.find_or_create_by(isbn: params[:isbn], name: params[:name]), with: Serializers::BookRepresenter
 			end
 		end
 	end
