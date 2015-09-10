@@ -1,4 +1,5 @@
 require 'rest-client'
+require 'json'
 
 module V1
 	class Books < Grape::API
@@ -35,8 +36,9 @@ module V1
 			get ':isbn' do
 				unless Book.exists?(isbn: params[:isbn])
 					isbn_db_response = RestClient.get "#{Rails.configuration.x.isbn_db_host}/#{Rails.configuration.x.isbn_db_api_key}/book/#{params[:isbn]}"
-					if isbn_db_response.status == 200
-						Book.creat(isbn: params[:isbn], name: isbn_db_response['data']['title'])
+					if isbn_db_response.code == 200
+						data = JSON.parse(isbn_db_response)
+						Book.create(isbn: params[:isbn], name: data['data'][0]['title'])
 					end
 				end 
 				Book.find_by(isbn: params[:isbn])
