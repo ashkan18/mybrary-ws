@@ -38,10 +38,10 @@ module V1
 					isbn_db_response = RestClient.get "#{Rails.configuration.x.isbn_db_host}/#{Rails.configuration.x.isbn_db_api_key}/book/#{params[:isbn]}"
 					if isbn_db_response.code == 200
 						data = JSON.parse(isbn_db_response)
-						Book.create(isbn: params[:isbn], name: data['data'][0]['title'])
+						present Book.create(isbn: params[:isbn], name: data['data'][0]['title']), with: Serializers::BookRepresenter
 					end
 				end 
-				Book.find_by(isbn: params[:isbn])
+				present Book.find_by(isbn: params[:isbn]), with: Serializers::BookRepresenter
 			end
 
 			desc 'Create a new Book'
