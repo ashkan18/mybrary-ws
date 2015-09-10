@@ -1,5 +1,9 @@
+require 'rest-client'
+
 module V1
 	class Books < Grape::API
+		ISBNDB_KEY = 'ZSXCUETS'
+
 		include V1::Defaults
 		
 		before do
@@ -29,6 +33,12 @@ module V1
 
 			desc 'Get Specific book by isbn'
 			get ':isbn' do
+				unless Book.exists?(isbn: params[:isbn])
+					isbn_db_response = RestClient.get "#{Rails.configuration.x.isbn_db_host}/#{Rails.configuration.x.isbn_db_api_key}/book/#{params[:isbn]}"
+					if isbn_db_response.status == 200
+						Book.creat(isbn: params[:isbn], name: isbn_db_response['data']['title'])
+					end
+				end 
 				Book.find_by(isbn: params[:isbn])
 			end
 

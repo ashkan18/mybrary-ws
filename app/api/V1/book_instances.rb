@@ -21,7 +21,7 @@ module V1
 																											 user: @current_user) 
 				book_instance.lat = params[:location][:lat].to_f
 				book_instance.lon = params[:location][:lon].to_f
-				book_instance.type = params[:give_type]
+				book_instance.offer_type = params[:give_type]
 				book_instance.save
 				book_instance
 			end

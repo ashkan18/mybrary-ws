@@ -38,4 +38,8 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  config.x.isbn_db_host = 'http://isbndb.com/api/v2/json'
+  config.x.isbn_db_api_key = 'ZSXCUETS'
+
 end

@@ -35,6 +35,8 @@ gem 'bcrypt'
 gem 'roar'
 gem 'grape-roar'
 
+gem 'rest-client'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
