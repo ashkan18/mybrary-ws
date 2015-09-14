@@ -25,5 +25,7 @@ test:
 
 production:
   <<: *default
-  database: mybrary
-  password: prodprod
+  host: ec2-50-16-229-89.compute-1.amazonaws.com
+  username: kkbtnfaazgsstw
+  database: d3k4mk7pd82vs5
+  password: MCNPYOl1mSpixlULxo2r2VrIEn
