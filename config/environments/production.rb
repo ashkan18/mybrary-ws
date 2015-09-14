@@ -76,4 +76,7 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.x.isbn_db_host = 'http://isbndb.com/api/v2/json'
+  config.x.isbn_db_api_key = 'ZSXCUETS'
 end
