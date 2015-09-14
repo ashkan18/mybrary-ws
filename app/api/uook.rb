@@ -1,3 +1,4 @@
+require 'V1/defaults'
 require 'V1/books'
 require 'V1/book_instances'
 require 'V1/users'
