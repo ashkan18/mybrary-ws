@@ -10,6 +10,7 @@ module V1
 		before do
 			authenticate!
 		end
+
 		resources :books do
 			desc 'Search Books'
 			params do
@@ -18,6 +19,7 @@ module V1
 				optional :lat, type: BigDecimal
 				optional :lon, type: BigDecimal
 				optional :author_name, type: String
+				optional :query, type: String
 				all_or_none_of :lon, :lat
 			end
 			get '' do
@@ -25,6 +27,7 @@ module V1
 				query = query.where("isbn" => params[:isbn]) if params.has_key?(:isbn)
 				query = query.where("name" => params[:name]) if params.has_key?(:name)
 				query = query.where("author.name" => params[:author_name]) if params.has_key?(:author_name)
+				query = query.where("isbn ILIKE :query OR name ILIKE :query", query: "%#{params[:query]}%") if params.has_key?(:query)
 				if params.has_key?(:lat) and params.has_key?(:lon)
 					center = [params[:lat].to_f, params[:lon].to_f]
 					query = query.within(5, origin: center)
