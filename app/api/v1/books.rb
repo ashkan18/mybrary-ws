@@ -1,8 +1,6 @@
 require 'rest-client'
 require 'json'
 
-require 'defaults'
-
 module V1
 	class Books < Grape::API
 		ISBNDB_KEY = 'ZSXCUETS'
