@@ -1,3 +1,5 @@
+require 'defaults'
+
 module V1
 	class Users < Grape::API
 		include V1::Defaults

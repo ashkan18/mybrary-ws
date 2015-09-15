@@ -1,4 +1,5 @@
 require 'securerandom'
+require 'defaults'
 
 module V1
 	class Auth < Grape::API

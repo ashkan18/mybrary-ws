@@ -1,3 +1,5 @@
+require 'defaults'
+
 module V1
 	class BookInstances < Grape::API
 		include V1::Defaults
