@@ -1,7 +1,7 @@
-require 'V1/books'
-require 'V1/book_instances'
-require 'V1/users'
-require 'V1/auth'
+# require 'V1/books'
+# require 'V1/book_instances'
+# require 'V1/users'
+# require 'V1/auth'
 
 class Uook < Grape::API
 	
