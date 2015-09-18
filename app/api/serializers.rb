@@ -7,6 +7,8 @@ module Serializers
 
     property :lat
     property :lon
+    property :id
+    property :user_id
   end
 
   module BookRepresenter

@@ -8,9 +8,9 @@ module V1
 			desc 'Create new book instance'
 			params do 
 				requires :isbn, type: String, documentation: { example: 'ISBN of the book' }
-				requires :give_type, type: Integer, values: [Constants::GiveTypes::FREE, 
-																										 Constants::GiveTypes::RENT,
-																										 Constants::GiveTypes::SELL], default: Constants::GiveTypes::FREE
+				requires :offer_type, type: Integer, values: [Constants::OfferTypes::FREE, 
+																										  Constants::OfferTypes::RENT,
+																										  Constants::OfferTypes::SELL], default: Constants::OfferTypes::FREE
 				requires :location, type: Hash, documentation: { example: 'Location object with lat and lon' } do 
 					requires :lat, type: BigDecimal, documentation: { example: 'Current Latitude of the book' }
 					requires :lon, type: BigDecimal, documentation: { example: 'Current Longitude of the book' }
@@ -19,10 +19,9 @@ module V1
 			post '/' do 
 				book_instance = BookInstance.find_or_create_by(book: Book.find_or_create_by(isbn: params[:isbn]),
 																											 user: @current_user) 
-				book_instance.lat = params[:location][:lat].to_f
-				book_instance.lon = params[:location][:lon].to_f
-				book_instance.offer_type = params[:give_type]
-				book_instance.save
+				book_instance.update(lat: params[:location][:lat].to_f,
+														 lon: params[:location][:lon].to_f,
+														 offer_type: params[:offer_type])
 				book_instance
 			end
 		end

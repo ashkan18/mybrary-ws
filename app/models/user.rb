@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
 
   has_many :book_instances
 	has_many :books, through: :book_instances
+  has_many :book_transactions
 
 	has_secure_password
 end
