@@ -24,7 +24,7 @@ module V1
 			route_param :user_id do
 				'desc get user by id'
 				get do
-					User.find_by(id: params[:user_id])
+					User.find(params[:user_id])
 				end
 			end
 
@@ -38,12 +38,13 @@ module V1
 				end
 
 				desc 'Get current user transactions' 
-				get 'transactions' do
-        	BookTransaction.joins(:book_instance).where('book_instances.user_id' => @current_user)
+				get 'requests' do
+        	BookRequest.joins(:book_instance).where('book_instances.user_id' => @current_user)
       	end
 
       	desc 'Get current user books'
       	get 'books' do
+
       	end
 			end 
 		end

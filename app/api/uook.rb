@@ -10,7 +10,7 @@ module Uook
   	    
   	mount V1::Books
   	mount V1::BookInstances
-    mount V1::BookTransactions
+    mount V1::BookRequests
   	mount V1::Users
     mount V1::Auth
 

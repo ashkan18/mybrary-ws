@@ -1,32 +1,31 @@
 module V1
-  class BookTransactions < Grape::API
+  class BookRequests < Grape::API
     include V1::Defaults
     # before do
     #   authenticate!
     # end
     
-    resources :book_transacitons do
-      desc 'Create new transaction'
+    resources :book_requests do
+      desc 'Create new book request'
       params do
         requires :book_instance_id, type: Integer
-        requires :user_id, type: Integer 
         requires :trans_type, type: Integer, values: [Constants::OfferTypes::FREE, 
                                                       Constants::OfferTypes::RENT,
                                                       Constants::OfferTypes::SELL], default: Constants::OfferTypes::FREE
-        requires :trans_value, type: Float
         requires :status, type: Integer, default: Constants::TransStatuses::REQUESTED
       end
       post '' do
-        BookTransaction.create(book_instance: BookInstance.find_by(id: params[:book_instance_id]),
-                                user: User.find_by(id: params[:user_id]),
+        book_instance = BookInstance.find(params[:book_instance_id])
+
+        BookRequest.create(book_instance: book_instance,
+                                user: @current_user,
                                 status: params[:status],
-                                trans_type: params[:trans_type],
-                                trans_value: params[:trans_value])
+                                trans_type: params[:trans_type])
       end
       
       route_param :id do
         get do
-          BookTransaction.find(params[:id])
+          BookRequest.find(params[:id])
         end
 
         params do
@@ -35,7 +34,7 @@ module V1
                     default: Constants::TransStatuses::REQUESTED
         end
         put do
-          BookTransaction.find(params[:id]).update(status: params[:status])
+          BookRequest.find(params[:id]).update(status: params[:status])
         end
       end
     end

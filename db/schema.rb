@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150917175624) do
+ActiveRecord::Schema.define(version: 20150918180907) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 20150917175624) do
   add_index "book_instances", ["book_id"], name: "index_book_instances_on_book_id", using: :btree
   add_index "book_instances", ["user_id"], name: "index_book_instances_on_user_id", using: :btree
 
-  create_table "book_transactions", force: :cascade do |t|
+  create_table "book_requests", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "book_instance_id"
     t.integer  "trans_type"
@@ -54,8 +54,8 @@ ActiveRecord::Schema.define(version: 20150917175624) do
     t.integer  "status"
   end
 
-  add_index "book_transactions", ["book_instance_id"], name: "index_book_transactions_on_book_instance_id", using: :btree
-  add_index "book_transactions", ["user_id"], name: "index_book_transactions_on_user_id", using: :btree
+  add_index "book_requests", ["book_instance_id"], name: "index_book_requests_on_book_instance_id", using: :btree
+  add_index "book_requests", ["user_id"], name: "index_book_requests_on_user_id", using: :btree
 
   create_table "books", force: :cascade do |t|
     t.string   "name"
@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 20150917175624) do
   add_foreign_key "api_keys", "users"
   add_foreign_key "book_instances", "books"
   add_foreign_key "book_instances", "users"
-  add_foreign_key "book_transactions", "book_instances"
-  add_foreign_key "book_transactions", "users"
+  add_foreign_key "book_requests", "book_instances"
+  add_foreign_key "book_requests", "users"
   add_foreign_key "books", "authors"
 end

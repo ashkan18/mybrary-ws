@@ -24,6 +24,12 @@ module V1
 														 offer_type: params[:offer_type])
 				book_instance
 			end
+
+			route_param :id do
+				get do
+					present BookInstance.joins(:user).find(params[:id]), with: Serializers::BookInstanceRepresenter
+				end
+			end
 		end
 	end
 end
