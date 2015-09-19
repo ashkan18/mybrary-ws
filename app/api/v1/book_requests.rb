@@ -30,11 +30,15 @@ module V1
 
         params do
           requires :status, type: Integer, 
-                    values: [Constants::TransStatuses::REQUESTED, Constants::TransStatuses::DONE],
+                    values: [Constants::TransStatuses::REQUESTED, 
+                             Constants::TransStatuses::DONE,
+                             Constants::TransStatuses::REJECTED],
                     default: Constants::TransStatuses::REQUESTED
         end
         put do
-          BookRequest.find(params[:id]).update(status: params[:status])
+          br = BookRequest.find(params[:id])
+          br.update(status: params[:status])
+          br
         end
       end
     end

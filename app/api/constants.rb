@@ -6,6 +6,7 @@ module Constants
   end
 
   module TransStatuses
+    REJECTED = -1
     REQUESTED = 1
     DONE = 2
   end
