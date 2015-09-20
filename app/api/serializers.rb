@@ -45,7 +45,6 @@ module Serializers
     property :book
   end
 
-
   module BookRequestRepresenter
     include Roar::JSON
     include Grape::Roar::Representer
