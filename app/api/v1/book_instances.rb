@@ -27,7 +27,7 @@ module V1
 
       route_param :id do
         get do
-          present BookInstance.joins(:user).find(params[:id]), with: Serializers::BookInstanceRepresenter
+          present BookInstance.includes(:user).find(params[:id]), with: Serializers::BookInstanceRepresenter
         end
       end
     end

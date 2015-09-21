@@ -35,13 +35,16 @@ module V1
         get do
           @current_user
         end
+        
         desc 'Get current user transactions'
         get 'requests' do
-          present BookRequest.joins(:book_instance).where('user_id = ?', @current_user), with: Serializers::BookRequestsRepresenter
+          present BookRequest.includes(:book_instance).where('user_id = ?', @current_user), with: Serializers::BookRequestsRepresenter
         end
-        get 'inquiry' do
-          present BookRequest.joins(:book_instance).where('book_instances.user_id = ?', @current_user), with: Serializers::BookRequestsRepresenter
+        
+        get 'inquiries' do
+          present BookRequest.includes(:book_instance).where('book_instances.user_id = ?', @current_user), with: Serializers::BookRequestsRepresenter
         end
+        
         desc 'Get current user books'
         get 'books' do
         end

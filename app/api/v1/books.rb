@@ -3,7 +3,6 @@ require 'json'
 
 module V1
   class Books < Grape::API
-    ISBNDB_KEY = 'ZSXCUETS'
 
     include V1::Defaults
 
@@ -25,11 +24,11 @@ module V1
         all_or_none_of :lon, :lat
       end
       get '' do
-        query = Book.all.joins(:book_instances)
+        query = Book.all.joins(:book_instances).includes(:book_instances)
         query = query.where('isbn' => params[:isbn]) if params.key?(:isbn)
         query = query.where('name' => params[:name]) if params.key?(:name)
         query = query.where('author.name' => params[:author_name]) if params.key?(:author_name)
-        query = query.where('isbn ILIKE ? OR name ILIKE ?', params[:query], params[:query]) if params.key?(:query)
+        query = query.where('isbn ILIKE ? OR name ILIKE ?', "%#{params[:query]}%", "%#{params[:query]}%") if params.key?(:query)
         query = query.where('book_instances.user_id' => params[:user_id]) if params.key?(:user_id)
         query = query.where.not('book_instances.user_id' => @current_user) unless params.key?(:include_mine) && params[:include_mine]
         if params.key?(:lat) && params.key?(:lon)
