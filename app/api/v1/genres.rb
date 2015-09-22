@@ -2,6 +2,10 @@ module V1
   class Genres < Grape::API
     include V1::Defaults
 
+    before do
+      authenticate!
+    end
+
     resource :genres do
       get do
         Genre.all
@@ -13,7 +17,7 @@ module V1
         end
 
         get '/books' do
-          present Book.joins([:book_genres, :book_instances]).includes(:book_instances).where(book_genres: {genre: params[:genre_id]}), with: Serializers::BooksRepresenter
+          present Book.joins([:book_genres, :book_instances]).includes(:book_instances).where(book_genres: { genre: params[:genre_id] }), with: Serializers::BooksRepresenter
         end
       end
     end

@@ -6,7 +6,7 @@ module V1
       desc 'Add a new user'
       params do
         requires :name, type: String
-        requires :type, type: Integer
+        requires :account_type, type: Integer
         requires :password, type: String
         requires :email, type: String
       end
@@ -16,7 +16,8 @@ module V1
           user = User.new(name: params[:name],
                           email: params[:email],
                           password: params[:password],
-                          password_confirmation: params[:password])
+                          password_confirmation: params[:password],
+                          account_type: params[:account_type])
           user.save
         end
         user
