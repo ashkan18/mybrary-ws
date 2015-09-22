@@ -12,7 +12,7 @@ module V1
         requires :req_type, type: Integer, values: [Constants::OfferTypes::FREE,
                                                     Constants::OfferTypes::RENT,
                                                     Constants::OfferTypes::SELL], default: Constants::OfferTypes::FREE
-        requires :status, type: Integer, default: Constants::TransStatuses::REQUESTED
+        optional :status, type: Integer, default: Constants::TransStatuses::REQUESTED
       end
       post '' do
         book_instance = BookInstance.find(params[:book_instance_id])
