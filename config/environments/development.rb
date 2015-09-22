@@ -41,5 +41,4 @@ Rails.application.configure do
 
   config.x.isbn_db_host = 'http://isbndb.com/api/v2/json'
   config.x.isbn_db_api_key = 'ZSXCUETS'
-
 end

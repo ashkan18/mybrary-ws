@@ -18,6 +18,13 @@ module Serializers
     property :user_id
   end
 
+  module GenreRepresenter
+    include Roar::JSON
+    include Grape::Roar::Representer
+
+    property :name
+  end
+
   module BookRepresenter
     include Roar::JSON
     include Grape::Roar::Representer
@@ -25,6 +32,7 @@ module Serializers
     property :name
     property :isbn
     collection :book_instances, extend: BookInstanceRepresenter
+    collection :genres, extend: GenreRepresenter
   end
 
   module BooksRepresenter
@@ -43,6 +51,13 @@ module Serializers
     property :id
     property :user, extend: UserRepresenter
     property :book
+  end
+
+  module BookInstancesRepresenter
+    include Roar::JSON
+    include Grape::Roar::Representer
+
+    collection :entries, extend: BookInstanceFullRepresenter, as: :book_instances, embedded: true
   end
 
   module BookRequestRepresenter

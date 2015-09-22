@@ -3,7 +3,6 @@ require 'json'
 
 module V1
   class Books < Grape::API
-
     include V1::Defaults
 
     before do
@@ -11,6 +10,15 @@ module V1
     end
 
     resources :books do
+      desc 'Create a new Book'
+      params do
+        requires :isbn, type: String
+        requires :name, type: String
+      end
+      post '' do
+        present Book.find_or_create_by(isbn: params[:isbn], name: params[:name]), with: Serializers::BookRepresenter
+      end
+
       desc 'Search Books'
       params do
         optional :name, type: String
@@ -39,24 +47,25 @@ module V1
       end
 
       desc 'Get Specific book by isbn'
-      get ':isbn' do
-        unless Book.exists?(isbn: params[:isbn])
-          isbn_db_response = RestClient.get "#{Rails.configuration.x.isbn_db_host}/#{Rails.configuration.x.isbn_db_api_key}/book/#{params[:isbn]}"
-          if isbn_db_response.code == 200
-            data = JSON.parse(isbn_db_response)
-            Book.create(isbn: params[:isbn], name: data['data'][0]['title'])
+      route_param :isbn do
+        get do
+          unless Book.exists?(isbn: params[:isbn])
+            isbn_db_response = RestClient.get "#{Rails.configuration.x.isbn_db_host}/#{Rails.configuration.x.isbn_db_api_key}/book/#{params[:isbn]}"
+            if isbn_db_response.code == 200
+              data = JSON.parse(isbn_db_response)
+              Book.create(isbn: params[:isbn], name: data['data'][0]['title'])
+            end
           end
+          present Book.find_by(isbn: params[:isbn]), with: Serializers::BookRepresenter
         end
-        present Book.find_by(isbn: params[:isbn]), with: Serializers::BookRepresenter
-      end
 
-      desc 'Create a new Book'
-      params do
-        requires :isbn, type: String
-        requires :name, type: String
-      end
-      post '' do
-        present Book.find_or_create_by(isbn: params[:isbn], name: params[:name]), with: Serializers::BookRepresenter
+        params do
+          optional :genre_id, type: Integer
+        end
+        put 'genres' do
+          book = book.find_by!(isbn: params[:isbn])
+          book.genres << Genre.find(params[:genre_id])
+        end
       end
     end
   end

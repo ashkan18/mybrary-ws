@@ -2,4 +2,4 @@
 
 require ::File.expand_path('../config/environment', __FILE__)
 run Uook::API
-#run Rails.application
+# run Rails.application
