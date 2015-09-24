@@ -14,8 +14,26 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  # config.action_mailer.delivery_method = :sendmail
+# Defaults to:
+  # config.action_mailer.sendmail_settings = {
+  #   location: '/usr/sbin/sendmail',
+  #   arguments: '-i -t'
+  # }
+  # send grid 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
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_options = {from: 'no-reply@mybrary.com'}
 
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:              'smtp.sendgrid.net',
+    port:                 587,
+    domain:               'ashkinas.com',
+    user_name:            'mybrary',
+    password:             'mybrary18',
+    authentication:       'plain',
+    enable_starttls_auto: true  }
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 

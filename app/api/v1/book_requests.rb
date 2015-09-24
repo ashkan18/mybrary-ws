@@ -17,10 +17,12 @@ module V1
       post '' do
         book_instance = BookInstance.find(params[:book_instance_id])
 
-        BookRequest.create(book_instance: book_instance,
+        br = BookRequest.create(book_instance: book_instance,
                            user: @current_user,
                            status: params[:status],
                            trans_type: params[:trans_type])
+        BookRequestMailer.book_inquery_email(br).deliver_now
+        present br
       end
 
       route_param :id do
