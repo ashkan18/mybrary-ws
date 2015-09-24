@@ -24,6 +24,21 @@ Rails.application.configure do
   # Apache or NGINX already handles this.
   config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
+  # mail setting
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_options = {from: 'no-reply@mybrary.com'}
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:              'smtp.sendgrid.net',
+    port:                 587,
+    domain:               'ashkinas.com',
+    user_name:            'mybrary',
+    password:             'mybrary18',
+    authentication:       'plain',
+    enable_starttls_auto: true  }
+  # Print deprecation notices to the Rails logger.
+
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
   # config.assets.css_compressor = :sass
