@@ -6,7 +6,7 @@
   <body>
     <h1>Hi <%= @book_request.book_instance.user.name %>!</h1>
     <p>
-      Good news! <%= @book_request.user.name %> has asked for <%= @book_request.book.name %>. In order to
+      Good news! <%= @book_request.user.name %> has asked for <%= @book_request.book_instance.book.name %>. In order to
       accept/reject this request, open Mybrary app on your phone, go to 'My Inqueries' and select your 
       action.
     </p>
