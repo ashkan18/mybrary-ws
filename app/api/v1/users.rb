@@ -19,6 +19,7 @@ module V1
                           password_confirmation: params[:password],
                           account_type: params[:account_type])
           user.save
+          UserMailer.welcome_email(user)
         end
         user
       end
