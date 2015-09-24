@@ -41,7 +41,7 @@ module V1
           br = BookRequest.find(params[:id])
           br.update(status: params[:status])
           BookRequestMailer.request_accept_email(br).deliver_now if params[:status] == Constants::TransStatuses::DONE
-          br
+          present br
         end
       end
     end
