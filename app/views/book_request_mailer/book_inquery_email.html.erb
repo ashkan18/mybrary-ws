@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Hi <%= @book_request.book_instance.user.name %>!</h1>
+    <p>
+      Good news! <%= @book_request.user.name %> has asked for <%= book_request.book.name %>. In order to
+      accept/reject this request, open Mybrary app on your phone, go to 'My Inqueries' and select your 
+      action.
+    </p>
+    <p>
+      Thanks for using Mybrary.
+    </p>
+  </body>
+</html>
