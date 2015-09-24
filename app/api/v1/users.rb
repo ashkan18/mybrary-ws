@@ -44,7 +44,7 @@ module V1
         end
 
         get 'inquiries' do
-          present BookRequest.joins(:book_instance).includes(:book_instance).where('book_instances.user_id = ?', @current_user), with: Serializers::BookRequestsRepresenter
+          present BookRequest.joins(:book_instance).includes(:book_instance).where('book_instances.user_id = ?', @current_user).where(status: Constants::TransStatuses::REQUESTED), with: Serializers::BookRequestsRepresenter
         end
 
         desc 'Get current user books'
