@@ -10,7 +10,8 @@ class BookRequestMailer < ApplicationMailer
 
   def request_accept_email(book_request)
     @book_request = book_request
-    mail(to: [book_request.user.email, book_request.book_instance.user.email],
+    mail(to: book_request.user.email,
+         cc: book_request.book_instance.user.email,
          subject: "Book Request Accepted, time to coordinate")
   end
 end

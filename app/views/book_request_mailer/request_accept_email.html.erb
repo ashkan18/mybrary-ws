@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Hi <%= book_request.user.name %>!</h1>
+    <p>
+      Good news! <%= @book_request.book_instance.user.name %> (CC'd) has accepted your request for <%= book_request.book_instance.book.name %>. Please coordinate with eachother on time when you can get the book.
+    </p>
+    <p>
+      Thanks for using Mybrary.
+    </p>
+  </body>
+</html>
