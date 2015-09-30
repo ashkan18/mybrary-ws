@@ -24,5 +24,8 @@ module Mybrary
     config.active_record.raise_in_transactional_callbacks = true
     config.paths.add 'app/api', glob: '**/*.rb'
     config.autoload_paths += Dir["#{Rails.root}/app/api/*"]
+
+    config.paths.add 'app/services', glob: '**/*.rb'
+    config.autoload_paths += Dir["#{Rails.root}/app/services/*"]
   end
 end

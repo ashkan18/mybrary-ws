@@ -50,11 +50,17 @@ module V1
       route_param :isbn do
         get do
           unless Book.exists?(isbn: params[:isbn])
-            isbn_db_response = RestClient.get "#{Rails.configuration.x.isbn_db_host}/#{Rails.configuration.x.isbn_db_api_key}/book/#{params[:isbn]}"
-            if isbn_db_response.code == 200
-              data = JSON.parse(isbn_db_response)
-              Book.create(isbn: params[:isbn], name: data['data'][0]['title'])
+            # get book from google
+            book_result = GoogleBookApi.getBookByISBN(params[:isbn])
+            unless book_result
+              book_result = ISBNDBApi.getBookByISBN(params[:isbn])
             end
+            Book.create(isbn: params[:isbn], 
+                        name: book_result['title'],
+                        author: Author.find_or_create_by(name:book_result['author']),
+                        small_cover_url: book_result['small_cover_url'],
+                        medium_cover_url: book_result['medium_cover_url'],
+                        large_cover_url: book_result['large_cover_url'])
           end
           present Book.find_by(isbn: params[:isbn]), with: Serializers::BookRepresenter
         end
