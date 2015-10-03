@@ -25,13 +25,37 @@ module Serializers
     property :name
   end
 
+  module AuthorRepresenter
+    include Roar::JSON
+    include Grape::Roar::Representer
+
+    property :name
+  end
+
   module BookRepresenter
     include Roar::JSON
     include Grape::Roar::Representer
 
     property :name
     property :isbn
+    property :small_cover_url
+    property :medium_cover_url
+    property :large_cover_url
+    property :author, extend: AuthorRepresenter
     collection :book_instances, extend: BookInstanceRepresenter
+    collection :genres, extend: GenreRepresenter
+  end
+
+  module BookRepresenterWithoutInstances
+    include Roar::JSON
+    include Grape::Roar::Representer
+
+    property :name
+    property :isbn
+    property :small_cover_url
+    property :medium_cover_url
+    property :large_cover_url
+    property :author, extend: AuthorRepresenter
     collection :genres, extend: GenreRepresenter
   end
 
@@ -50,7 +74,7 @@ module Serializers
     property :lon
     property :id
     property :user, extend: UserRepresenter
-    property :book
+    property :book, extend: BookRepresenterWithoutInstances
   end
 
   module BookInstancesRepresenter
