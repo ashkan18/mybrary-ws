@@ -49,7 +49,7 @@ module V1
 
         desc 'Get current user books'
         get 'book_instances' do
-          present BookInstance.includes(:book).where(user: @current_user), with: Serializers::BookInstancesRepresenter
+          present BookInstance.includes(:book).where(user: @current_user).where.not(status: Constants::BookInstanceStatus::DELETED), with: Serializers::BookInstancesRepresenter
         end
       end
     end

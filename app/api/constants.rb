@@ -11,5 +11,9 @@ module Constants
     DONE = 2
   end
 
+  module BookInstanceStatus
+    DELETED = -1
+  end
+
   CLOSEST_DISTANCE = 5
 end

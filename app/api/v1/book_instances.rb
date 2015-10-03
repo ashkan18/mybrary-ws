@@ -29,6 +29,14 @@ module V1
         get do
           present BookInstance.includes([:user, :book]).find(params[:id]), with: Serializers::BookInstanceFullRepresenter
         end
+
+        delete do
+          unless BookRequest.exists?(book_instance_id: params[:id])
+            BookInstance.delete(params[:id])
+          else 
+            BookInstance.find(params[:id]).update(status: Constants::BookInstanceStatus::DELETED)
+          end
+        end
       end
     end
   end
