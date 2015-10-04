@@ -73,6 +73,7 @@ module Serializers
     property :lat
     property :lon
     property :id
+    property :offer_type
     property :user, extend: UserRepresenter
     property :book, extend: BookRepresenterWithoutInstances
   end
