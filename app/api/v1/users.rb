@@ -40,16 +40,16 @@ module V1
 
         desc 'Get current user transactions'
         get 'requests' do
-          present BookRequest.includes(:book_instance).where('user_id = ?', @current_user), with: Serializers::BookRequestsRepresenter
+          present BookRequest.includes(:book_instance, :user).where('user_id = ?', @current_user), with: Serializers::BookRequestsRepresenter
         end
 
         get 'inquiries' do
-          present BookRequest.joins(:book_instance).includes(:book_instance).where('book_instances.user_id = ?', @current_user).where(status: Constants::TransStatuses::REQUESTED), with: Serializers::BookRequestsRepresenter
+          present BookRequest.joins(:book_instance, :user).includes(:book_instance).where('book_instances.user_id = ?', @current_user).where(status: Constants::TransStatuses::REQUESTED), with: Serializers::BookRequestsRepresenter
         end
 
         desc 'Get current user books'
         get 'book_instances' do
-          present BookInstance.includes(:book).where(user: @current_user).where.not(status: Constants::BookInstanceStatus::DELETED), with: Serializers::BookInstancesRepresenter
+          present BookInstance.includes(:book, :author).where(user: @current_user).where.not(status: Constants::BookInstanceStatus::DELETED), with: Serializers::BookInstancesRepresenter
         end
       end
     end

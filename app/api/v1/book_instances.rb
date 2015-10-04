@@ -21,7 +21,8 @@ module V1
                                                        user: @current_user)
         book_instance.update(lat: params[:location][:lat].to_f,
                              lon: params[:location][:lon].to_f,
-                             offer_type: params[:offer_type])
+                             offer_type: params[:offer_type],
+                             status: Constants::BookInstanceStatus::AVAILABLE)
         book_instance
       end
 
@@ -31,10 +32,15 @@ module V1
         end
 
         delete do
-          unless BookRequest.exists?(book_instance_id: params[:id])
+          br = BookRequest.find_by(book_instance_id: params[:id])
+          unless br
             BookInstance.delete(params[:id])
           else 
-            BookInstance.find(params[:id]).update(status: Constants::BookInstanceStatus::DELETED)
+            unless br.status == Constants::TransStatuses::REQUESTED
+              BookInstance.find(params[:id]).update(status: Constants::BookInstanceStatus::DELETED)
+            else 
+              error! 'You have requests for this book', 403
+            end
           end
         end
       end

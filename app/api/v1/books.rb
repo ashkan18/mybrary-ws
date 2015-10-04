@@ -32,12 +32,12 @@ module V1
         all_or_none_of :lon, :lat
       end
       get '' do
-        query = Book.all.joins(:book_instances).includes(:book_instances)
-        query = query.where('isbn' => params[:isbn]) if params.key?(:isbn)
-        query = query.where('name' => params[:name]) if params.key?(:name)
-        query = query.where('author.name' => params[:author_name]) if params.key?(:author_name)
-        query = query.where('isbn ILIKE ? OR name ILIKE ?', "%#{params[:query]}%", "%#{params[:query]}%") if params.key?(:query)
-        query = query.where('book_instances.user_id' => params[:user_id]) if params.key?(:user_id)
+        query = Book.all.joins(:book_instances, :author).includes(:book_instances, :author).where.not('book_instances.status' => Constants::BookInstanceStatus::DELETED)
+        query = query.where(isbn: params[:isbn]) if params.key?(:isbn)
+        query = query.where(name: params[:name]) if params.key?(:name)
+        query = query.where(authors: {name: params[:author_name]}) if params.key?(:author_name)
+        query = query.where('isbn ILIKE ? OR books.name ILIKE ? OR authors.name ILIKE ?', "%#{params[:query]}%", "%#{params[:query]}%", "%#{params[:query]}%") if params.key?(:query)
+        query = query.where(book_instances: {user_id: params[:user_id]}) if params.key?(:user_id)
         query = query.where.not('book_instances.user_id' => @current_user) unless params.key?(:include_mine) && params[:include_mine]
         if params.key?(:lat) && params.key?(:lon)
           center = [params[:lat].to_f, params[:lon].to_f]

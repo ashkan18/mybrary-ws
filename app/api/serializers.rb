@@ -89,6 +89,7 @@ module Serializers
     include Grape::Roar::Representer
 
     property :id
+    property :status
     property :user, extend: UserRepresenter
     property :book_instance, extend: BookInstanceFullRepresenter
   end

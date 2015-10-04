@@ -13,6 +13,7 @@ module Constants
 
   module BookInstanceStatus
     DELETED = -1
+    AVAILABLE = 1
   end
 
   CLOSEST_DISTANCE = 5
