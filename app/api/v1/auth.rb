@@ -21,6 +21,7 @@ module V1
         requires :email, type: String
         requires :access_token, type: String
         optional :name, type: String
+        optional :profile_picture_url, type: String
       end
       post 'facebook' do
         user = User.find_by(email: params[:email].downcase)
@@ -29,6 +30,7 @@ module V1
                              email: params[:email],
                              password: 'facebook',
                              password_confirmation: 'facebook',
+                             profile_picture_url: params[:profile_picture_url],
                              account_type: 1)
           UserMailer.welcome_email(user)
         end
