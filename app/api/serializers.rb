@@ -6,6 +6,7 @@ module Serializers
     include Grape::Roar::Representer
 
     property :name
+    property :profile_picture_url
   end
 
   module BookInstanceRepresenter
