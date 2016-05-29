@@ -21,8 +21,9 @@ module V1
           user.save
           UserMailer.welcome_email(user)
         end
-        user
+        { user: user, api_key: APIKey.create(access_token: SecureRandom.hex, user: user) }
       end
+      
       route_param :user_id do
         desc 'get user by id'
         get do
